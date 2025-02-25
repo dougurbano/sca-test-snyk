@@ -25,23 +25,11 @@ jobs:
       # 3. Instalar dependências Node.js
       - name: Install Node.js dependencies
         run: npm install
-      
-      # 4. Set up Python
-      - name: Set up Python
-        uses: actions/setup-python@v2
-        with:
-          python-version: "3.x"
 
-      # 5. Instalar dependências Python
-      - name: Install Python dependencies
-        run: pip install -r requirements.txt
-
-      # 6. Instalar o Snyk
+      # 4. Instalar Snyk
       - name: Install Snyk
         run: npm install -g snyk
 
-      # 7. Rodar Snyk para verificar vulnerabilidades em todos os projetos
-      - name: Run Snyk to check for vulnerabilities in all projects
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-        run: snyk test --all-projects
+      # 5. Rodar Snyk para verificar vulnerabilidades
+      - name: Run Snyk to check for vulnerabilities
+        run: snyk test
