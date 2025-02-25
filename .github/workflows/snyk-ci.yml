@@ -38,16 +38,8 @@ jobs:
 
       # 6. Rodar Snyk para verificar vulnerabilidades em todos os projetos
       - name: Run Snyk to check for vulnerabilities in all projects
-        uses: snyk/actions@v2
+        uses: snyk/actions@v1
         with:
           args: test --all-projects
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-
-      # 7. Monitoramento das dependências
-      - name: Monitor dependencies with Snyk
-        uses: snyk/actions@v2
-        with:
-          args: monitor --all-projects
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
