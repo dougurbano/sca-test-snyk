@@ -32,4 +32,6 @@ jobs:
 
       # 5. Rodar Snyk para verificar vulnerabilidades
       - name: Run Snyk to check for vulnerabilities
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}  # Usando o secret SNYK_TOKEN
         run: snyk test
