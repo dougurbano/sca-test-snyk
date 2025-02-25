@@ -28,7 +28,7 @@ jobs:
       
       # 4. Rodar Snyk para verificar vulnerabilidades
       - name: Run Snyk to check for vulnerabilities
-        uses: snyk/actions@v2
+        uses: snyk/actions@master
         with:
           args: test
         env:
