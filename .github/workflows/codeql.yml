@@ -23,3 +23,7 @@ jobs:
         uses: github/codeql-action/analyze@v1
         with:
           verbosity: info # Set the verbosity level to an appropriate value
+
+          permissions:
+          contents: read
+          security-events: write
