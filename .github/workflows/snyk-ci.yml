@@ -40,6 +40,6 @@ jobs:
       - name: Run Snyk to check for vulnerabilities in all projects
         uses: snyk/actions@0.1.0
         with:
-          args: test --all-projects --detection-depth 4
+          args: test --all-projects
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
