@@ -16,19 +16,20 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      # 2. Instalar dependências
+      # 2. Set up Node.js
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: "16"
 
+      # 3. Instalar dependências
       - name: Install dependencies
         run: npm install
       
-      # 3. Rodar Snyk para verificar vulnerabilidades
+      # 4. Rodar Snyk para verificar vulnerabilidades
       - name: Run Snyk to check for vulnerabilities
-        uses: snyk/actions@master
+        uses: snyk/actions@v2
         with:
-          args: test --all-projects --json
+          args: test
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
