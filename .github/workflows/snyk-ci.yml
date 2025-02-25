@@ -38,7 +38,7 @@ jobs:
 
       # Run Snyk to check for vulnerabilities in all projects
       - name: Run Snyk to check for vulnerabilities in all projects
-        uses: snyk/actions@0.4.0
+        uses: snyk/actions@7c9c8fc
         with:
           args: test --all-projects
         env:
