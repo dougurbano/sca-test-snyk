@@ -26,7 +26,7 @@ jobs:
 
       # 3. SCA: Análise de dependências
       - name: Snyk SCA Test
-        uses: snyk/actions/cli@v2.0.0  # Atualizado para v2.0.0
+        uses: snyk/actions@v1
         with:
           args: test
         env:
@@ -34,7 +34,7 @@ jobs:
 
       # 4. SAST: Análise de código
       - name: Snyk Code Test (SAST)
-        uses: snyk/actions/cli@v2.0.0  # Atualizado para v2.0.0
+        uses: snyk/actions@v1
         with:
           args: code test
         env:
@@ -42,8 +42,8 @@ jobs:
 
       # 5. IaC: Análise de infraestrutura como código (por exemplo, Terraform)
       - name: Snyk IaC Test
-        uses: snyk/actions/cli@v2.0.0  # Atualizado para v2.0.0
+        uses: snyk/actions@v1
         with:
           args: iac test
         env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }} 
