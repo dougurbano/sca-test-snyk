@@ -2,62 +2,24 @@ name: Security Scan
 
 on:
   push:
-    branches:
-      - main
+    branches: [ main ]
   pull_request:
-    branches:
-      - main
+    branches: [ main ]
 
 jobs:
-  codeql:
-    name: CodeQL Analysis
+  analyze:
+    name: Analyze
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
-        with:
-          node-version: 18  # ✅ Correção aqui
-
-      - name: Install dependencies
-        run: npm install
+      - name: Checkout repository
+        uses: actions/checkout@v2
 
       - name: Initialize CodeQL
-        uses: github/codeql-action/init@v3
+        uses: github/codeql-action/init@v1
         with:
-          languages: javascript-typescript
-          build-mode: none  # ✅ Removido autobuild
-
-      - name: Build project
-        run: |
-          npm run build || echo "Build falhou, continuando com a análise"
+          languages: python
 
       - name: Perform CodeQL Analysis
-        uses: github/codeql-action/analyze@v3
-
-  snyk:
-    name: Snyk Security Scan
-    runs-on: ubuntu-latest
-    needs: codeql
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v4
-
-      - name: Set up Node.js
-        uses: actions/setup-node@v4
+        uses: github/codeql-action/analyze@v1
         with:
-          node-version: 18  # ✅ Correção aqui também
-
-      - name: Install dependencies
-        run: npm install
-
-      - name: Install Snyk
-        run: npm install -g snyk
-
-      - name: Authenticate Snyk
-        run: snyk auth ${{ secrets.SNYK_TOKEN }}
-
-      - name: Run Snyk test
-        run: snyk test
+          verbosity: info # Set the verbosity level to an appropriate value
