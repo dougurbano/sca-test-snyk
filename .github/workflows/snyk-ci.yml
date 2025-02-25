@@ -1,41 +1,18 @@
-name: "Snyk Vulnerability Scan"
-
-on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
-
 jobs:
   snyk:
     runs-on: ubuntu-latest
-    permissions:
-      contents: read                # Permissão para ler o conteúdo do repositório
-      issues: write                 # Permissão para escrever problemas, caso o Snyk envie PRs para correção
-      pull-requests: write          # Permissão para criar pull requests se necessário
     steps:
-      # 1. Checkout do código
       - name: Checkout code
         uses: actions/checkout@v2
-
-      # 2. Set up Node.js
+      
       - name: Set up Node.js
-        uses: actions/setup-node@v3
-        with:
-          node-version: "16"
+        uses: actions/setup-node@v16
 
-      # 3. Instalar dependências Node.js
-      - name: Install Node.js dependencies
-        run: npm install
-
-      # 4. Instalar Snyk
       - name: Install Snyk
         run: npm install -g snyk
+      
+      - name: Authenticate Snyk
+        run: snyk auth ${{ secrets.SNYK_TOKEN }}
 
-      # 5. Rodar Snyk para verificar vulnerabilidades
-      - name: Run Snyk to check for vulnerabilities
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}  # Usando o secret SNYK_TOKEN
+      - name: Run Snyk test
         run: snyk test
