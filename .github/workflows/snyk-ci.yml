@@ -12,12 +12,23 @@ jobs:
   snyk:
     runs-on: ubuntu-latest
     steps:
+      # 1. Checkout do código
       - name: Checkout code
         uses: actions/checkout@v2
 
+      # 2. Instalar dependências (se necessário para seu projeto)
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: "16"
+      
+      - name: Install dependencies
+        run: npm install
+
+      # 3. Rodar Snyk para verificar vulnerabilidades
       - name: Run Snyk to check for vulnerabilities
         uses: snyk/actions@master
         with:
-          args: test
+          args: test --all-projects --json
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
