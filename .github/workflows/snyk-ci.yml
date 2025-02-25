@@ -12,33 +12,43 @@ jobs:
   snyk:
     runs-on: ubuntu-latest
     steps:
-      # 1. Checkout do código
+      # Checkout the code
       - name: Checkout code
         uses: actions/checkout@v2
-
-      # 2. Set up Node.js
+      
+      # Set up Node.js
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: "16"
 
-      # 3. Instalar dependências Node.js
+      # Install Node.js dependencies
       - name: Install Node.js dependencies
         run: npm install
-      
-      # 4. Set up Python
+
+      # Set up Python
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
           python-version: "3.x"
 
-      # 5. Instalar dependências Python
+      # Install Python dependencies
       - name: Install Python dependencies
-        run: pip install -r requirements.txt
+        run: |
+          pip install --upgrade pip
+          pip install -r requirements.txt
 
-      # 6. Rodar Snyk para verificar vulnerabilidades em todos os projetos
+      # Print installed Python dependencies for debugging
+      - name: List installed Python packages
+        run: pip list
+      
+      # Print installed Node.js dependencies for debugging
+      - name: List installed Node.js packages
+        run: npm list
+
+      # Run Snyk to check for vulnerabilities in all projects
       - name: Run Snyk to check for vulnerabilities in all projects
-        uses: snyk/actions@0.1.0
+        uses: snyk/actions@master
         with:
           args: test --all-projects
         env:
