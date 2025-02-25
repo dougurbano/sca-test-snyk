@@ -1,0 +1,12 @@
+{
+    "name": "sca-test-snyk",
+    "version": "1.0.0",
+    "description": "Test SCA with Snyk",
+    "main": "index.js",
+    "dependencies": {
+      "express": "4.17.1", 
+      "lodash": "4.17.19", 
+      "axios": "0.21.1"
+    }
+  }
+  
