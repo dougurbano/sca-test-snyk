@@ -1,4 +1,4 @@
-name: Snyk Security Scans
+name: "Snyk Vulnerability Scan"
 
 on:
   push:
@@ -11,6 +11,10 @@ on:
 jobs:
   snyk:
     runs-on: ubuntu-latest
+    permissions:
+      contents: read                # Permissão para ler o conteúdo do repositório
+      issues: write                 # Permissão para escrever problemas, caso o Snyk envie PRs para correção
+      pull-requests: write          # Permissão para criar pull requests se necessário
     steps:
       # 1. Checkout do código
       - name: Checkout code
