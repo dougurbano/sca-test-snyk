@@ -1,18 +1,45 @@
-name: Snyk example
-on: push
+name: Snyk Security Scans
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
 jobs:
-  security:
+  snyk:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@master
-      - uses: snyk/actions/setup@master
-      - uses: actions/setup-go@v1
+      # 1. Checkout do código
+      - name: Checkout code
+        uses: actions/checkout@v2
+
+      # 2. Set up Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
         with:
-          go-version: '1.13'
-      - name: Snyk monitor
-        run: snyk test
-         --all-projects
+          node-version: "16"
+
+      # 3. Instalar dependências Node.js
+      - name: Install Node.js dependencies
+        run: npm install
+      
+      # 4. Set up Python
+      - name: Set up Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: "3.x"
+
+      # 5. Instalar dependências Python
+      - name: Install Python dependencies
+        run: pip install -r requirements.txt
+
+      # 6. Rodar Snyk para verificar vulnerabilidades em todos os projetos
+      - name: Run Snyk to check for vulnerabilities in all projects
+        uses: snyk/actions@master
+        with:
+          args: test --all-projects
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-
-       
