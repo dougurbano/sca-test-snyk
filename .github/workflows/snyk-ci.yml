@@ -16,15 +16,16 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v2
 
-      # 2. Instalar dependências (se necessário para seu projeto)
+      # 2. Instalar dependências
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
           node-version: "16"
       
       - name: Install dependencies
-        run: npm install
-
+        run: |
+          cd ./sca-test-snyk && npm install
+          
       # 3. Rodar Snyk para verificar vulnerabilidades
       - name: Run Snyk to check for vulnerabilities
         uses: snyk/actions@master
