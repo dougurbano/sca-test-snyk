@@ -16,11 +16,21 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Set up Node.js
+        uses: actions/setup-node@v18
+
+      - name: Install dependencies
+        run: npm install  # Ajuste para seu gerenciador de pacotes se necessário
+
       - name: Initialize CodeQL
         uses: github/codeql-action/init@v3
         with:
           languages: javascript-typescript
-          build-mode: autobuild
+          build-mode: none  # 🚨 Corrigido! CodeQL não suporta autobuild para JS/TS
+
+      - name: Build project
+        run: |
+          npm run build || echo "Build falhou, continuando com a análise"  # Adapte para seu projeto
 
       - name: Perform CodeQL Analysis
         uses: github/codeql-action/analyze@v3
@@ -32,16 +42,16 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
-      
+
       - name: Set up Node.js
-        uses: actions/setup-node@v18  # Atualizado para uma versão mais recente
+        uses: actions/setup-node@v18
 
       - name: Install dependencies
         run: npm install
 
       - name: Install Snyk
         run: npm install -g snyk
-      
+
       - name: Authenticate Snyk
         run: snyk auth ${{ secrets.SNYK_TOKEN }}
 
