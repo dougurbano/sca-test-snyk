@@ -10,36 +10,36 @@ jobs:
   security:
     name: Security Scan
     runs-on: ubuntu-latest
+
     permissions:
       actions: read
       contents: read
-      packages: read
-      security-events: write
+      security-events: write  # Necessário para reportar alertas
 
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      # Etapa de SAST com CodeQL
-      - name: Rodando CodeQL
+      # CodeQL
+      - name: Initialize CodeQL
         uses: github/codeql-action/init@v3
         with:
           languages: javascript
 
-      - name: Rodando CodeQL Analysis
+      - name: Run CodeQL Analysis
         uses: github/codeql-action/analyze@v3
 
-      # Etapa de SCA para análise de vulnerabilidades nas dependências (Node)
-      - name: Rodando SCA (Vulnerabilidades de Dependências)
+      # SCA (Node)
+      - name: Rodando SCA (Node)
         uses: snyk/actions/node@master
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
           command: test
 
-      # Etapa de IaC para análise de infraestrutura como código (Terraform)
+      # IaC (Terraform) - usando a action oficial "iac@master"
       - name: Rodando IaC (Terraform)
-        uses: snyk/actions/terraform@master
+        uses: snyk/actions/iac@master
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
