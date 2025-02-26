@@ -38,9 +38,22 @@ jobs:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
       # --- IaC com Snyk (Terraform) ---
-      - name: Rodando Snyk para Terraform (IaC)
-        uses: snyk/actions/terraform@terraform/v2.0.1
-        with:
-          args: --file=./infra/main.tf
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+    - name: Rodando Snyk Infraestrutura (IaC)
+
+on: [push, pull_request]
+
+jobs:
+  scan:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v2
+
+    - name: Run Snyk to check for vulnerabilities
+      uses: snyk/actions@v2.0.0  # Update to a valid version
+      with:
+        args: test
+
+    # Add additional steps as needed
+
+          
