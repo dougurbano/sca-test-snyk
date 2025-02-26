@@ -37,5 +37,5 @@ jobs:
 
       - name: Rodando IaC (Terraform)
         uses: snyk/actions/terraform@v1
-        with
+        with:
           command: test
