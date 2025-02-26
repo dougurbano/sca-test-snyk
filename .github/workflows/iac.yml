@@ -1,24 +1,11 @@
-name: Snyk IaC Scan
-
-on:
-  push:
-    branches:
-      - main
-  pull_request:
-    branches:
-      - main
-
+name: Snyk Infrastructure as Code (IaC)
+on: push
 jobs:
-  snyk:
+  security:
     runs-on: ubuntu-latest
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
-
-      - name: Run Snyk to check for IaC issues
-        uses: snyk/actions@v2 # Update to the correct version
-        with:
-          command: iac test
-          args: terraform
+      - uses: actions/checkout@v2
+      - name: Run Snyk to check Kubernetes manifest file for issues
+        uses: snyk/actions/iac@master
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
