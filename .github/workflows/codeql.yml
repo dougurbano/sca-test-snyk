@@ -39,7 +39,7 @@ jobs:
 
       # --- IaC com Snyk (Terraform) ---
       - name: Rodando Snyk para Terraform (IaC)
-        uses: snyk/actions/terraform@master
+        uses: snyk/actions/terraform@v2.0.1
         with:
           args: --file=./infra/main.tf
         env:
