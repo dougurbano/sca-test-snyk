@@ -1,0 +1,1602 @@
+{
+  "$schema": "https://raw.githubusercontent.com/oasis-tcs/sarif-spec/master/Schemata/sarif-schema-2.1.0.json",
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "SnykCode",
+          "semanticVersion": "1.0.0",
+          "version": "1.0.0",
+          "rules": [
+            {
+              "id": "javascript/HttpToHttps",
+              "name": "HttpToHttps",
+              "shortDescription": {
+                "text": "Cleartext Transmission of Sensitive Information"
+              },
+              "defaultConfiguration": {
+                "level": "warning"
+              },
+              "help": {
+                "markdown": "\n## Details\nThis weakness occurs when software transmits sensitive information, such as passwords or credit card numbers, in unencrypted form. This information may then be intercepted by threat actors using sniffer tools or interception techniques such as man-in-the-middle (MITM) attacks (often involving social engineering). Attackers can then use information gleaned to perform a variety of actions, depending on the information type. Possible actions include gaining unauthorized access, impersonating a user, moving laterally within the organization's network, or retrieving and potentially modifying files. This weakness is almost completely avoidable through intelligent architecture and design.\n\n## Best practices for prevention\n* Build web applications around a security mindset and the awareness that sniffers may be present at any time.\n* Ensure that all sensitive data transmission uses reliable encryption.\n* Implement security measures so that sensitive results are never returned in plain text.\n* Implement multiple-factor authentication methods to validate remote instances.\n* Use SSL not only at logon but throughout communications.",
+                "text": ""
+              },
+              "properties": {
+                "tags": [
+                  "javascript",
+                  "HttpToHttps",
+                  "Security"
+                ],
+                "categories": [
+                  "Security"
+                ],
+                "exampleCommitFixes": [
+                  {
+                    "commitURL": "https://github.com/eserozvataf/apibone/commit/bbac9343971a20f4fee124b6f0a2f6a80895fb35?diff=split#diff-8b733ca241b0609b1fc0f2e60d14f911b3a82997a939e7eb01fe6c25b759c234L-1",
+                    "lines": [
+                      {
+                        "line": "const http = require('http'),\n",
+                        "lineNumber": 0,
+                        "lineChange": "removed"
+                      },
+                      {
+                        "line": "const https = require('https'),\n",
+                        "lineNumber": 0,
+                        "lineChange": "added"
+                      }
+                    ]
+                  },
+                  {
+                    "commitURL": "https://github.com/RetireJS/retire.js/commit/82d44d60c98acba0e4c3772709e76b989c4274bb?diff=split#diff-89d400752fb89d946a43778e9f0b3dba25968dcdf8604ae08adbb3ecb236338fL-1",
+                    "lines": [
+                      {
+                        "line": "var http = require('http'),\n",
+                        "lineNumber": 1,
+                        "lineChange": "removed"
+                      },
+                      {
+                        "line": "var http = require('https'),\n",
+                        "lineNumber": 1,
+                        "lineChange": "added"
+                      }
+                    ]
+                  },
+                  {
+                    "commitURL": "https://github.com/Rich-Harris/packd/commit/c14d17da80ed075ee007de3121422fb2c5b77e4d?diff=split#diff-1821d11fbffbab2187701c42616688d46bf66d7b2cf6eaf363548dd66caa6ebaL-1",
+                    "lines": [
+                      {
+                        "line": "const http = require( 'http' );\n",
+                        "lineNumber": 0,
+                        "lineChange": "removed"
+                      },
+                      {
+                        "line": "const https = require( 'https' );\n",
+                        "lineNumber": 0,
+                        "lineChange": "added"
+                      },
+                      {
+                        "line": "\n",
+                        "lineNumber": 1,
+                        "lineChange": "none"
+                      },
+                      {
+                        "line": "module.exports = function get ( url ) {\n",
+                        "lineNumber": 2,
+                        "lineChange": "none"
+                      },
+                      {
+                        "line": "\treturn new Promise( ( fulfil, reject ) => {\n",
+                        "lineNumber": 3,
+                        "lineChange": "none"
+                      },
+                      {
+                        "line": "\t\thttp.get( url, response => {\n",
+                        "lineNumber": 4,
+                        "lineChange": "removed"
+                      },
+                      {
+                        "line": "\t\thttps.get( url, response => {\n",
+                        "lineNumber": 4,
+                        "lineChange": "added"
+                      }
+                    ]
+                  }
+                ],
+                "exampleCommitDescriptions": [],
+                "precision": "very-high",
+                "repoDatasetSize": 122,
+                "cwe": [
+                  "CWE-319"
+                ]
+              }
+            },
+            {
+              "id": "javascript/InsecureHash",
+              "name": "InsecureHash",
+              "shortDescription": {
+                "text": "Use of Password Hash With Insufficient Computational Effort"
+              },
+              "defaultConfiguration": {
+                "level": "note"
+              },
+              "help": {
+                "markdown": "\n## Details\n\nSensitive information should never be stored in plain text, since this makes it very easy for unauthorized users, whether malicious insiders or outside attackers, to access. Hashing methods are used to make stored passwords and other sensitive data unreadable to users. For example, when a password is defined for the first time, it is hashed and then stored. The next time that user attempts to log on, the password they enter is hashed following the same procedure and compared with the stored value. In this way, the original password never needs to be stored in the system.\n\nHashing is a one-way scheme, meaning a hashed password cannot be reverse engineered. However, if an outdated or custom programmed hashing scheme is used, it becomes simple for an attacker with powerful modern computing power to gain access to the hashes used. This opens up access to all stored password information, leading to breached security. Therefore, it is essential for developers to understand modern, secure password hashing techniques.\n\n## Best practices for prevention\n* Use strong standard algorithms for hashing rather than simpler but outdated methods or DIY hashing schemes, which may have inherent weaknesses.\n* Use modular design for all code dealing with hashing so it can be swapped out as security standards change over time.\n* Use salting in combination with hashing (While this places more demands on resources, it is an essential step for tighter security.).\n* Implement zero-trust architecture to ensure that access to password data is granted only for legitimate business purposes.\n* Increase developer awareness of current standards in data security and cryptography.",
+                "text": ""
+              },
+              "properties": {
+                "tags": [
+                  "javascript",
+                  "InsecureHash",
+                  "Security"
+                ],
+                "categories": [
+                  "Security"
+                ],
+                "exampleCommitFixes": [
+                  {
+                    "commitURL": "https://github.com/steilerDev/homebridge-openhab2-complete/commit/6e92ef40f991cc372b701390945e0e5bbeb71016?diff=split#diff-34bbd467b1ab0e3497ce244b09d2bfbc4ab192303dd90b13603baf6711b522dfL-1",
+                    "lines": [
+                      {
+                        "line": "function generate(name) {\n",
+                        "lineNumber": 4,
+                        "lineChange": "removed"
+                      },
+                      {
+                        "line": "    const sha1sum = crypto.createHash('sha1');\n",
+                        "lineNumber": 5,
+                        "lineChange": "removed"
+                      },
+                      {
+                        "line": "    sha1sum.update(name);\n",
+                        "lineNumber": 6,
+                        "lineChange": "removed"
+                      },
+                      {
+                        "line": "function generate(name, type) {\n",
+                        "lineNumber": 4,
+                        "lineChange": "added"
+                      },
+                      {
+                        "line": "    const hash = crypto.createHash('sha512');\n",
+                        "lineNumber": 5,
+                        "lineChange": "added"
+                      },
+                      {
+                        "line": "    hash.update(name);\n",
+                        "lineNumber": 6,
+                        "lineChange": "added"
+                      },
+                      {
+                        "line": "    hash.update(type);\n",
+                        "lineNumber": 7,
+                        "lineChange": "added"
+                      }
+                    ]
+                  },
+                  {
+                    "commitURL": "https://github.com/raphael-group/magi/commit/1e1ed6435a97858e38d0cab962d7e248710f60e1?diff=split#diff-a4bd8e7c606b00ad2f2d6eeb95ba96714ece5c8b1266c2b503f3531b12d46257L-1",
+                    "lines": [
+                      {
+                        "line": "hasher = crypto.createHash('md5').update(url),\n",
+                        "lineNumber": 7,
+                        "lineChange": "removed"
+                      },
+                      {
+                        "line": "hasher = crypto.createHash('RIPEMD-64').update(url),\n",
+                        "lineNumber": 7,
+                        "lineChange": "added"
+                      }
+                    ]
+                  },
+                  {
+                    "commitURL": "https://github.com/mafintosh/hyperlog/commit/d93cc65e485d740face1dacffa66dbcf03bcc7c3?diff=split#diff-b29a862e995b5e16d1763a35604cec4f13f3ca08bb9318d8f7ccfa24b757f7e0L-1",
+                    "lines": [
+                      {
+                        "line": "return crypto.createHash('sha1')\n",
+                        "lineNumber": 3,
+                        "lineChange": "removed"
+                      },
+                      {
+                        "line": "return crypto.createHash('sha256')\n",
+                        "lineNumber": 3,
+                        "lineChange": "added"
+                      }
+                    ]
+                  }
+                ],
+                "exampleCommitDescriptions": [],
+                "precision": "very-high",
+                "repoDatasetSize": 52,
+                "cwe": [
+                  "CWE-916"
+                ]
+              }
+            },
+            {
+              "id": "javascript/InsufficientPostmessageValidation",
+              "name": "InsufficientPostmessageValidation",
+              "shortDescription": {
+                "text": "Insufficient postMessage Validation"
+              },
+              "defaultConfiguration": {
+                "level": "note"
+              },
+              "help": {
+                "markdown": "\n## Details\n\npostMessage is a feature to perform cross-origin communication between JavaScript Window objects. This can be done by:\n\n* The sender using the `targetWindow.postMessage(message, targetOrigin)` to send a message to the `targetWindow` but only if the origin in that window matches `targetOrigin` (or if targetOrigin is set to the special value `*`);\n\n* The receiver listening for the message event in the window object.\n\nHowever, if no validation is done by the receiver, this could allow any window to send arbitrary data to the handler. This vulnerability could be leveraged by an attacker to disclose sensitive data to a malicious origin, or perform actions on a vicitim's behalf.\n\nExample:\n\n```\n\nwindow.addEventListener(\"message\", (event) => {\n    // DANGEROUS: No validation of origin\n    doStuff(event.data);\n});\n\n```\n\n## Best practices for prevention\n* Adopt a zero-trust model in which all input is considered potentially suspect.\n* Specify the targetOrigin instead of designating a wildcard `*`.\n\nExample:\n\n```\nwindow.addEventListener(\"message\", (event) => {\n    if (event.origin !== \"http://example.org\") // SAFE: origin checked\n        return;\n\n    console.log(event.data)\n});\n```\n\n## References\n\n* [Introduction to postMessage() Vulnerabilities](https://blog.yeswehack.com/yeswerhackers/introduction-postmessage-vulnerabilities/)",
+                "text": ""
+              },
+              "properties": {
+                "tags": [
+                  "javascript",
+                  "InsufficientPostmessageValidation",
+                  "Security"
+                ],
+                "categories": [
+                  "Security"
+                ],
+                "exampleCommitFixes": [
+                  {
+                    "commitURL": "https://github.com/sghall/bundle-inspector-webpack-plugin/commit/1897c82280ad6b4957c646ca775ea9780cef8de6?diff=split#diff-495bc0c184ce2971c7055c2837f64789a05b97aa3a259d7d8e4acf91976e9066L-1",
+                    "lines": [
+                      {
+                        "line": "  ws = new WebSocket(`ws://localhost`);\n",
+                        "lineNumber": 11,
+                        "lineChange": "removed"
+                      },
+                      {
+                        "line": "} catch (err) {\n",
+                        "lineNumber": 12,
+                        "lineChange": "removed"
+                      },
+                      {
+                        "line": "  console.warn(\"Chunky Monkey could not connect :(\");\n",
+                        "lineNumber": 13,
+                        "lineChange": "removed"
+                      },
+                      {
+                        "line": "}\n",
+                        "lineNumber": 14,
+                        "lineChange": "removed"
+                      },
+                      {
+                        "line": "  const ws = new WebSocket(`ws://${window.location.host}`);\n",
+                        "lineNumber": 6,
+                        "lineChange": "added"
+                      },
+                      {
+                        "line": "\n",
+                        "lineNumber": 15,
+                        "lineChange": "none"
+                      },
+                      {
+                        "line": "window.addEventListener(\n",
+                        "lineNumber": 16,
+                        "lineChange": "removed"
+                      },
+                      {
+                        "line": "  \"load\",\n",
+                        "lineNumber": 17,
+                        "lineChange": "removed"
+                      },
+                      {
+                        "line": "  () => {\n",
+                        "lineNumber": 18,
+                        "lineChange": "removed"
+                      },
+                      {
+                        "line": "    if (ws) {\n",
+                        "lineNumber": 19,
+                        "lineChange": "removed"
+                      },
+                      {
+                        "line": "      ws.addEventListener(\"message\", event => {\n",
+                        "lineNumber": 20,
+                        "lineChange": "removed"
+                      },
+                      {
+                        "line": "        console.log(JSON.parse(event.data));\n",
+                        "lineNumber": 21,
+                        "lineChange": "removed"
+                      },
+                      {
+                        "line": "  ws.addEventListener(\"message\", ({ data }) => {\n",
+                        "lineNumber": 8,
+                        "lineChange": "added"
+                      },
+                      {
+                        "line": "    window.location = `${window.location.pathname}?file=${data}`;\n",
+                        "lineNumber": 9,
+                        "lineChange": "added"
+                      },
+                      {
+                        "line": "  });\n",
+                        "lineNumber": 22,
+                        "lineChange": "none"
+                      }
+                    ]
+                  },
+                  {
+                    "commitURL": "https://github.com/nt1m/livemarks/commit/?diff=split#diff-b071a95828cd1e12786bbf262513e1cd86334ad61365f6cbe617d1ea290c4c65L-1",
+                    "lines": [
+                      {
+                        "line": "window.addEventListener(\"message\", function(e) {\n",
+                        "lineNumber": 2,
+                        "lineChange": "none"
+                      },
+                      {
+                        "line": "    if (e.origin !== \"http://example.org\") // OK: origin checked\n",
+                        "lineNumber": 3,
+                        "lineChange": "added"
+                      },
+                      {
+                        "line": "        return;\n",
+                        "lineNumber": 4,
+                        "lineChange": "added"
+                      }
+                    ]
+                  },
+                  {
+                    "commitURL": "https://github.com/XinFinOrg/BlockDegree/commit/80b281064fd0b9378a7f1e37d5d6bdbd2789c296?diff=split#diff-e392879f830a5cb8915ca15e7cca2054faa1b09c20d8159bbe97688c35779b30L-1",
+                    "lines": [
+                      {
+                        "line": "function(event) {\n",
+                        "lineNumber": 287,
+                        "lineChange": "none"
+                      },
+                      {
+                        "line": "  // if (event.origin == \"https://www.blockdegree.org\") {\n",
+                        "lineNumber": 284,
+                        "lineChange": "removed"
+                      },
+                      {
+                        "line": "  console.log(\"Originating event: \", event.origin);\n",
+                        "lineNumber": 288,
+                        "lineChange": "added"
+                      },
+                      {
+                        "line": "  if (event.origin == \"https://www.blockdegree.org\") {\n",
+                        "lineNumber": 289,
+                        "lineChange": "added"
+                      },
+                      {
+                        "line": "    $.notify(\"Loggin linked!\", { type: \"success\" });\n",
+                        "lineNumber": 290,
+                        "lineChange": "added"
+                      },
+                      {
+                        "line": "    checkAuth();\n",
+                        "lineNumber": 291,
+                        "lineChange": "none"
+                      },
+                      {
+                        "line": "  // }\n",
+                        "lineNumber": 286,
+                        "lineChange": "removed"
+                      },
+                      {
+                        "line": "  }\n",
+                        "lineNumber": 292,
+                        "lineChange": "added"
+                      }
+                    ]
+                  }
+                ],
+                "exampleCommitDescriptions": [],
+                "precision": "very-high",
+                "repoDatasetSize": 47,
+                "cwe": [
+                  "CWE-20"
+                ]
+              }
+            },
+            {
+              "id": "javascript/reDOS",
+              "name": "reDOS",
+              "shortDescription": {
+                "text": "Regular Expression Denial of Service (ReDoS)"
+              },
+              "defaultConfiguration": {
+                "level": "error"
+              },
+              "help": {
+                "markdown": "## Details\n\nDenial of Service (DoS) describes a family of attacks, all aimed at making a system inaccessible to its original and legitimate users. There are many types of DoS attacks, ranging from trying to clog the network pipes to the system by generating a large volume of traffic from many machines (a Distributed Denial of Service - DDoS - attack) to sending crafted requests that cause a system to crash or take a disproportional amount of time to process.\n\nThe Regular expression Denial of Service (ReDoS) is a type of Denial of Service attack. Regular expressions are incredibly powerful, but they aren't very intuitive and can ultimately end up making it easy for attackers to take your site down.\n\nLet's take the following regular expression as an example:\n```js\nregex = /A(B|C+)+D/\n```\n\nThis regular expression accomplishes the following:\n- `A` The string must start with the letter 'A'\n- `(B|C+)+` The string must then follow the letter A with either the letter 'B' or some number of occurrences of the letter 'C' (the `+` matches one or more times). The `+` at the end of this section states that we can look for one or more matches of this section.\n- `D` Finally, we ensure this section of the string ends with a 'D'\n\nThe expression would match inputs such as `ABBD`, `ABCCCCD`, `ABCBCCCD` and `ACCCCCD`\n\nIt most cases, it doesn't take very long for a regex engine to find a match:\n\n```bash\n$ time node -e '/A(B|C+)+D/.test(\"ACCCCCCCCCCCCCCCCCCCCCCCCCCCCD\")'\n0.04s user 0.01s system 95% cpu 0.052 total\n\n$ time node -e '/A(B|C+)+D/.test(\"ACCCCCCCCCCCCCCCCCCCCCCCCCCCCX\")'\n1.79s user 0.02s system 99% cpu 1.812 total\n```\n\nThe entire process of testing it against a 30 characters long string takes around ~52ms. But when given an invalid string, it takes nearly two seconds to complete the test, over ten times as long as it took to test a valid string. The dramatic difference is due to the way regular expressions get evaluated.\n\nMost Regex engines will work very similarly (with minor differences). The engine will match the first possible way to accept the current character and proceed to the next one. If it then fails to match the next one, it will backtrack and see if there was another way to digest the previous character. If it goes too far down the rabbit hole only to find out the string doesn't match in the end, and if many characters have multiple valid regex paths, the number of backtracking steps can become very large, resulting in what is known as _catastrophic backtracking_.\n\nLet's look at how our expression runs into this problem, using a shorter string: \"ACCCX\". While it seems fairly straightforward, there are still four different ways that the engine could match those three C's:\n1. CCC\n2. CC+C\n3. C+CC\n4. C+C+C.\n\nThe engine has to try each of those combinations to see if any of them potentially match against the expression. When you combine that with the other steps the engine must take, we can use [RegEx 101 debugger](https://regex101.com/debugger) to see the engine has to take a total of 38 steps before it can determine the string doesn't match.\n\nFrom there, the number of steps the engine must use to validate a string just continues to grow.\n\n| String | Number of C's | Number of steps |\n| -------|-------------:| -----:|\n| ACCCX | 3 | 38\n| ACCCCX | 4 | 71\n| ACCCCCX | 5 | 136\n| ACCCCCCCCCCCCCCX | 14 | 65,553\n\n\nBy the time the string includes 14 C's, the engine has to take over 65,000 steps just to see if the string is valid. These extreme situations can cause them to work very slowly (exponentially related to input size, as shown above), allowing an attacker to exploit this and can cause the service to excessively consume CPU, resulting in a Denial of Service.",
+                "text": ""
+              },
+              "properties": {
+                "tags": [
+                  "javascript",
+                  "reDOS",
+                  "Security",
+                  "SourceServer",
+                  "SourceRequestUrl",
+                  "Taint"
+                ],
+                "categories": [
+                  "Security"
+                ],
+                "exampleCommitFixes": [
+                  {
+                    "commitURL": "https://github.com/francisypl/mineranker/commit/e94ce7e5380a39e942492346e897f1c3f8c83e72?diff=split#diff-f1b621f1530c1dfc1923f77ae606c30a0be4a0c388840af21c17addc05ab6dcfL-1",
+                    "lines": [
+                      {
+                        "line": "    let options = {};\n",
+                        "lineNumber": 4,
+                        "lineChange": "removed"
+                      },
+                      {
+                        "line": "    let query = {};\n",
+                        "lineNumber": 5,
+                        "lineChange": "removed"
+                      },
+                      {
+                        "line": "\n",
+                        "lineNumber": 6,
+                        "lineChange": "removed"
+                      },
+                      {
+                        "line": "    var query = '';\n",
+                        "lineNumber": 4,
+                        "lineChange": "added"
+                      },
+                      {
+                        "line": "    // If there is a query param, else it is the empty\n",
+                        "lineNumber": 7,
+                        "lineChange": "none"
+                      },
+                      {
+                        "line": "    if (_.has(req.query, 'q')) {\n",
+                        "lineNumber": 8,
+                        "lineChange": "none"
+                      },
+                      {
+                        "line": "        var queryRegex = new RegExp(req.query.q, 'i');\n",
+                        "lineNumber": 9,
+                        "lineChange": "removed"
+                      },
+                      {
+                        "line": "        query = {name : {$regex : queryRegex}};\n",
+                        "lineNumber": 10,
+                        "lineChange": "removed"
+                      },
+                      {
+                        "line": "        query = req.query.q;\n",
+                        "lineNumber": 7,
+                        "lineChange": "added"
+                      },
+                      {
+                        "line": "    }\n",
+                        "lineNumber": 11,
+                        "lineChange": "none"
+                      },
+                      {
+                        "line": "\n",
+                        "lineNumber": 12,
+                        "lineChange": "none"
+                      },
+                      {
+                        "line": "    options.sort = [['_id', 'desc']];\n",
+                        "lineNumber": 13,
+                        "lineChange": "removed"
+                      },
+                      {
+                        "line": "\n",
+                        "lineNumber": 14,
+                        "lineChange": "removed"
+                      },
+                      {
+                        "line": "    ranker.fetchAll(query, options)\n",
+                        "lineNumber": 15,
+                        "lineChange": "removed"
+                      },
+                      {
+                        "line": "    ranker.fetchAll(query)\n",
+                        "lineNumber": 10,
+                        "lineChange": "added"
+                      }
+                    ]
+                  },
+                  {
+                    "commitURL": "https://github.com/XiaoMi/hiui/commit/488dd61cefe176af7097dfd7a3448bd190ecffff?diff=split#diff-ddbcffeff01d66de820d5badf769d19b42b8564953784470c52ad68cbc4b83f1L-1",
+                    "lines": [
+                      {
+                        "line": "return this.isRemote() || (!searchable || !keyword) || (searchable && keyword && (String(item.id).match(keyword) || String(item.name).match(keyword)))\n",
+                        "lineNumber": 407,
+                        "lineChange": "removed"
+                      },
+                      {
+                        "line": "return this.isRemote() || (!searchable || !keyword) || (searchable && keyword && (String(item.id).includes(keyword) || String(item.name).includes(keyword)))\n",
+                        "lineNumber": 407,
+                        "lineChange": "added"
+                      }
+                    ]
+                  },
+                  {
+                    "commitURL": "https://github.com/infor-design/enterprise/commit/51c32f05c358e7e01ca5b246c067299cd7993c1c?diff=split#diff-e07d531ac040ce3f40e0ce632ac2a059d7cd60f20e61f78268ac3be015b3b28fL-1",
+                    "lines": [
+                      {
+                        "line": "new RegExp('_' + type + '\\\\.scss'),\n",
+                        "lineNumber": 344,
+                        "lineChange": "removed"
+                      },
+                      {
+                        "line": "new RegExp('(\\d|\\w|\\s|-)*?\\.(scss)'),\n",
+                        "lineNumber": 344,
+                        "lineChange": "added"
+                      }
+                    ]
+                  }
+                ],
+                "exampleCommitDescriptions": [],
+                "precision": "very-high",
+                "repoDatasetSize": 81,
+                "cwe": [
+                  "CWE-400"
+                ]
+              }
+            }
+          ]
+        }
+      },
+      "results": [
+        {
+          "ruleId": "javascript/HttpToHttps",
+          "ruleIndex": 0,
+          "level": "warning",
+          "message": {
+            "text": "request uses HTTP which is an insecure protocol and should not be used in code due to cleartext transmission of information. Data in cleartext in a communication channel can be sniffed by unauthorized actors. Consider using the https module instead.",
+            "markdown": "{0} uses HTTP which is an insecure protocol and should not be used in code due to cleartext transmission of information. Data in cleartext in a communication channel can be sniffed by unauthorized actors. Consider using the https module instead.",
+            "arguments": [
+              "[request](0)"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "node_modules/axios/dist/node/axios.cjs",
+                  "uriBaseId": "%SRCROOT%"
+                },
+                "region": {
+                  "startLine": 3007,
+                  "endLine": 3007,
+                  "startColumn": 21,
+                  "endColumn": 28
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "0": "803f5844bc6e49d7465ef380a51fc81df9f9d84b46a7a68cda8d19a6cf747e8f",
+            "1": "faade14c.4773f344.74955ecf.c224c744.11bcfc34.98c7c24d.759f566f.ae94f388.e539501b.4773f344.8a8477c4.d7919eeb.79a7d027.5fce695c.cd61fc56.89d75565"
+          },
+          "codeFlows": [
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "id": 0,
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "node_modules/axios/dist/node/axios.cjs",
+                            "uriBaseId": "%SRCROOT%"
+                          },
+                          "region": {
+                            "startLine": 3007,
+                            "endLine": 3007,
+                            "startColumn": 21,
+                            "endColumn": 28
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "priorityScore": 578,
+            "priorityScoreFactors": [
+              {
+                "label": true,
+                "type": "multipleOccurrence"
+              },
+              {
+                "label": true,
+                "type": "hotFileSource"
+              },
+              {
+                "label": true,
+                "type": "fixExamples"
+              }
+            ],
+            "isAutofixable": true
+          }
+        },
+        {
+          "ruleId": "javascript/HttpToHttps",
+          "ruleIndex": 0,
+          "level": "warning",
+          "message": {
+            "text": "http.createServer uses HTTP which is an insecure protocol and should not be used in code due to cleartext transmission of information. Data in cleartext in a communication channel can be sniffed by unauthorized actors. Consider using the https module instead.",
+            "markdown": "{0} uses HTTP which is an insecure protocol and should not be used in code due to cleartext transmission of information. Data in cleartext in a communication channel can be sniffed by unauthorized actors. Consider using the https module instead.",
+            "arguments": [
+              "[http.createServer](0)"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "node_modules/express/lib/application.js",
+                  "uriBaseId": "%SRCROOT%"
+                },
+                "region": {
+                  "startLine": 634,
+                  "endLine": 634,
+                  "startColumn": 16,
+                  "endColumn": 33
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "0": "c40e833e42241c975adbf0993bdd0282ea6083bb4e6fdae4dc4b9bd5b3704cb3",
+            "1": "aac70831.883ce888.b8d9fa19.d7919eeb.2fce9a75.6f0d36d4.cd61fc56.63ad1ad6.0423bc55.fba75ec3.607187b5.d7919eeb.968cbaba.5fce695c.3bc5ce02.89d75565"
+          },
+          "codeFlows": [
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "id": 0,
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "node_modules/express/lib/application.js",
+                            "uriBaseId": "%SRCROOT%"
+                          },
+                          "region": {
+                            "startLine": 634,
+                            "endLine": 634,
+                            "startColumn": 16,
+                            "endColumn": 33
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "priorityScore": 528,
+            "priorityScoreFactors": [
+              {
+                "label": true,
+                "type": "multipleOccurrence"
+              },
+              {
+                "label": true,
+                "type": "hotFileCodeFlow"
+              },
+              {
+                "label": true,
+                "type": "fixExamples"
+              }
+            ],
+            "isAutofixable": true
+          }
+        },
+        {
+          "ruleId": "javascript/HttpToHttps",
+          "ruleIndex": 0,
+          "level": "warning",
+          "message": {
+            "text": "http.request uses HTTP which is an insecure protocol and should not be used in code due to cleartext transmission of information. Data in cleartext in a communication channel can be sniffed by unauthorized actors. Consider using the https module instead.",
+            "markdown": "{0} uses HTTP which is an insecure protocol and should not be used in code due to cleartext transmission of information. Data in cleartext in a communication channel can be sniffed by unauthorized actors. Consider using the https module instead.",
+            "arguments": [
+              "[http.request](0)"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "node_modules/form-data/lib/form_data.js",
+                  "uriBaseId": "%SRCROOT%"
+                },
+                "region": {
+                  "startLine": 456,
+                  "endLine": 456,
+                  "startColumn": 15,
+                  "endColumn": 27
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "0": "a7d14a2bcf41fb3075220d7c076f54440130fe68fcf5aeebba9d6aebf8a72c41",
+            "1": "aac70831.4773f344.254e94bc.a517c54b.2fce9a75.98c7c24d.cd61fc56.bd899c1f.5a562d4f.4773f344.ddfea499.d7919eeb.79a7d027.f8890b3c.cd61fc56.f83a2308"
+          },
+          "codeFlows": [
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "id": 0,
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "node_modules/form-data/lib/form_data.js",
+                            "uriBaseId": "%SRCROOT%"
+                          },
+                          "region": {
+                            "startLine": 456,
+                            "endLine": 456,
+                            "startColumn": 15,
+                            "endColumn": 27
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "priorityScore": 528,
+            "priorityScoreFactors": [
+              {
+                "label": true,
+                "type": "multipleOccurrence"
+              },
+              {
+                "label": true,
+                "type": "hotFileCodeFlow"
+              },
+              {
+                "label": true,
+                "type": "fixExamples"
+              }
+            ],
+            "isAutofixable": true
+          }
+        },
+        {
+          "ruleId": "javascript/InsecureHash",
+          "ruleIndex": 1,
+          "level": "note",
+          "message": {
+            "text": "sha1 hash (used in crypto.createHash) is insecure. Consider changing it to a secure hashing algorithm.",
+            "markdown": "{0} hash (used in {1}) is insecure. Consider changing it to a secure hashing algorithm.",
+            "arguments": [
+              "[sha1](0)",
+              "[crypto.createHash](1)"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "node_modules/cookie-signature/index.js",
+                  "uriBaseId": "%SRCROOT%"
+                },
+                "region": {
+                  "startLine": 50,
+                  "endLine": 50,
+                  "startColumn": 10,
+                  "endColumn": 27
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "0": "7444da49cdc80c6352a5f1e4ca285fbc739971f19a7e4623ff2bc52b922944bf",
+            "1": "37bc1bfe.9f15f38e.191eaf2b.d9da6552.ef9f7d82.82ca542b.b7c406fd.71520ffe.ae77ea27.9f15f38e.191eaf2b.d9da6552.f7b6c27c.5fce695c.04f551bd.71520ffe"
+          },
+          "codeFlows": [
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "id": 0,
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "node_modules/cookie-signature/index.js",
+                            "uriBaseId": "%SRCROOT%"
+                          },
+                          "region": {
+                            "startLine": 50,
+                            "endLine": 50,
+                            "startColumn": 28,
+                            "endColumn": 34
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "id": 1,
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "node_modules/cookie-signature/index.js",
+                            "uriBaseId": "%SRCROOT%"
+                          },
+                          "region": {
+                            "startLine": 50,
+                            "endLine": 50,
+                            "startColumn": 10,
+                            "endColumn": 27
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "priorityScore": 369,
+            "priorityScoreFactors": [
+              {
+                "label": true,
+                "type": "multipleOccurrence"
+              },
+              {
+                "label": true,
+                "type": "hotFileCodeFlow"
+              },
+              {
+                "label": true,
+                "type": "fixExamples"
+              }
+            ],
+            "isAutofixable": true
+          }
+        },
+        {
+          "ruleId": "javascript/InsecureHash",
+          "ruleIndex": 1,
+          "level": "note",
+          "message": {
+            "text": "sha1 hash (used in crypto.createHash) is insecure. Consider changing it to a secure hashing algorithm.",
+            "markdown": "{0} hash (used in {1}) is insecure. Consider changing it to a secure hashing algorithm.",
+            "arguments": [
+              "[sha1](0)",
+              "[crypto.createHash](1)"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "node_modules/etag/index.js",
+                  "uriBaseId": "%SRCROOT%"
+                },
+                "region": {
+                  "startLine": 46,
+                  "endLine": 47,
+                  "startColumn": 14,
+                  "endColumn": 16
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "0": "32c58a0f12c41bd1e1f944cdaea268711630e9615db16f741917b434d7c7bc43",
+            "1": "37bc1bfe.4773f344.191eaf2b.d9da6552.ef9f7d82.0204cbe8.7a8c7288.71520ffe.ae77ea27.4773f344.191eaf2b.d9da6552.f7b6c27c.0204cbe8.04f551bd.71520ffe"
+          },
+          "codeFlows": [
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "id": 0,
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "node_modules/etag/index.js",
+                            "uriBaseId": "%SRCROOT%"
+                          },
+                          "region": {
+                            "startLine": 47,
+                            "endLine": 47,
+                            "startColumn": 17,
+                            "endColumn": 23
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "id": 1,
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "node_modules/etag/index.js",
+                            "uriBaseId": "%SRCROOT%"
+                          },
+                          "region": {
+                            "startLine": 46,
+                            "endLine": 47,
+                            "startColumn": 14,
+                            "endColumn": 16
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "priorityScore": 369,
+            "priorityScoreFactors": [
+              {
+                "label": true,
+                "type": "multipleOccurrence"
+              },
+              {
+                "label": true,
+                "type": "hotFileCodeFlow"
+              },
+              {
+                "label": true,
+                "type": "fixExamples"
+              }
+            ],
+            "isAutofixable": true
+          }
+        },
+        {
+          "ruleId": "javascript/InsufficientPostmessageValidation",
+          "ruleIndex": 2,
+          "level": "note",
+          "message": {
+            "text": "The origin of the received message is not checked. This means any site (even malicious) can send message to this window. If you don't expect this, consider checking the origin of sender.",
+            "markdown": "The origin of the received message is not checked. This means any site (even malicious) can send message to this window. If you don't expect this, consider checking the origin of sender.",
+            "arguments": []
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "node_modules/axios/dist/axios.js",
+                  "uriBaseId": "%SRCROOT%"
+                },
+                "region": {
+                  "startLine": 1332,
+                  "endLine": 1332,
+                  "startColumn": 53,
+                  "endColumn": 58
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "0": "df8eb40941e65802579759b4da0400181186dd02ae9c1aeeadc97274992e894e",
+            "1": "988d3c10.4773f344.607187b5.c559ebce.ef9f7d82.8020cfdf.83265159.3cee0341.988d3c10.4773f344.6bb8eed2.c559ebce.69920cab.8020cfdf.83265159.1db0a836"
+          },
+          "codeFlows": [
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "id": 0,
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "node_modules/axios/dist/axios.js",
+                            "uriBaseId": "%SRCROOT%"
+                          },
+                          "region": {
+                            "startLine": 1332,
+                            "endLine": 1332,
+                            "startColumn": 53,
+                            "endColumn": 58
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "priorityScore": 396,
+            "priorityScoreFactors": [
+              {
+                "label": true,
+                "type": "multipleOccurrence"
+              },
+              {
+                "label": true,
+                "type": "hotFileCodeFlow"
+              },
+              {
+                "label": true,
+                "type": "fixExamples"
+              }
+            ],
+            "isAutofixable": true
+          }
+        },
+        {
+          "ruleId": "javascript/InsufficientPostmessageValidation",
+          "ruleIndex": 2,
+          "level": "note",
+          "message": {
+            "text": "The origin of the received message is not checked. This means any site (even malicious) can send message to this window. If you don't expect this, consider checking the origin of sender.",
+            "markdown": "The origin of the received message is not checked. This means any site (even malicious) can send message to this window. If you don't expect this, consider checking the origin of sender.",
+            "arguments": []
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "node_modules/axios/dist/browser/axios.cjs",
+                  "uriBaseId": "%SRCROOT%"
+                },
+                "region": {
+                  "startLine": 686,
+                  "endLine": 686,
+                  "startColumn": 42,
+                  "endColumn": 56
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "0": "fb298f187ccc49ec489c6c4c2e56c245ea323ed3165a5e9ca95ef57f6e424e6a",
+            "1": "988d3c10.4773f344.607187b5.c559ebce.8d22f254.10d85176.83265159.870b3dbe.988d3c10.4773f344.6bb8eed2.c559ebce.69920cab.8020cfdf.83265159.1db0a836"
+          },
+          "codeFlows": [
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "id": 0,
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "node_modules/axios/dist/browser/axios.cjs",
+                            "uriBaseId": "%SRCROOT%"
+                          },
+                          "region": {
+                            "startLine": 686,
+                            "endLine": 686,
+                            "startColumn": 42,
+                            "endColumn": 56
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "priorityScore": 396,
+            "priorityScoreFactors": [
+              {
+                "label": true,
+                "type": "multipleOccurrence"
+              },
+              {
+                "label": true,
+                "type": "hotFileCodeFlow"
+              },
+              {
+                "label": true,
+                "type": "fixExamples"
+              }
+            ],
+            "isAutofixable": true
+          }
+        },
+        {
+          "ruleId": "javascript/InsufficientPostmessageValidation",
+          "ruleIndex": 2,
+          "level": "note",
+          "message": {
+            "text": "The origin of the received message is not checked. This means any site (even malicious) can send message to this window. If you don't expect this, consider checking the origin of sender.",
+            "markdown": "The origin of the received message is not checked. This means any site (even malicious) can send message to this window. If you don't expect this, consider checking the origin of sender.",
+            "arguments": []
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "node_modules/axios/dist/esm/axios.js",
+                  "uriBaseId": "%SRCROOT%"
+                },
+                "region": {
+                  "startLine": 684,
+                  "endLine": 684,
+                  "startColumn": 42,
+                  "endColumn": 56
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "0": "8057ff1e4bbd1b80a13385b4182432f573c1323fb0669ced5c9baf1088a611ef",
+            "1": "988d3c10.4773f344.607187b5.c559ebce.8d22f254.10d85176.83265159.870b3dbe.988d3c10.4773f344.6bb8eed2.c559ebce.69920cab.8020cfdf.83265159.1db0a836"
+          },
+          "codeFlows": [
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "id": 0,
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "node_modules/axios/dist/esm/axios.js",
+                            "uriBaseId": "%SRCROOT%"
+                          },
+                          "region": {
+                            "startLine": 684,
+                            "endLine": 684,
+                            "startColumn": 42,
+                            "endColumn": 56
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "priorityScore": 396,
+            "priorityScoreFactors": [
+              {
+                "label": true,
+                "type": "multipleOccurrence"
+              },
+              {
+                "label": true,
+                "type": "hotFileCodeFlow"
+              },
+              {
+                "label": true,
+                "type": "fixExamples"
+              }
+            ],
+            "isAutofixable": true
+          }
+        },
+        {
+          "ruleId": "javascript/InsufficientPostmessageValidation",
+          "ruleIndex": 2,
+          "level": "note",
+          "message": {
+            "text": "The origin of the received message is not checked. This means any site (even malicious) can send message to this window. If you don't expect this, consider checking the origin of sender.",
+            "markdown": "The origin of the received message is not checked. This means any site (even malicious) can send message to this window. If you don't expect this, consider checking the origin of sender.",
+            "arguments": []
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "node_modules/axios/dist/node/axios.cjs",
+                  "uriBaseId": "%SRCROOT%"
+                },
+                "region": {
+                  "startLine": 709,
+                  "endLine": 709,
+                  "startColumn": 42,
+                  "endColumn": 56
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "0": "471f2fa7d44f32bd79a6eb3051e0f019d4fbb3e5ddc3d1d5abd28cecbeb5a69d",
+            "1": "988d3c10.4773f344.607187b5.c559ebce.8d22f254.10d85176.83265159.870b3dbe.988d3c10.4773f344.6bb8eed2.c559ebce.69920cab.8020cfdf.83265159.1db0a836"
+          },
+          "codeFlows": [
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "id": 0,
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "node_modules/axios/dist/node/axios.cjs",
+                            "uriBaseId": "%SRCROOT%"
+                          },
+                          "region": {
+                            "startLine": 709,
+                            "endLine": 709,
+                            "startColumn": 42,
+                            "endColumn": 56
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "priorityScore": 446,
+            "priorityScoreFactors": [
+              {
+                "label": true,
+                "type": "multipleOccurrence"
+              },
+              {
+                "label": true,
+                "type": "hotFileSource"
+              },
+              {
+                "label": true,
+                "type": "fixExamples"
+              }
+            ],
+            "isAutofixable": true
+          }
+        },
+        {
+          "ruleId": "javascript/InsufficientPostmessageValidation",
+          "ruleIndex": 2,
+          "level": "note",
+          "message": {
+            "text": "The origin of the received message is not checked. This means any site (even malicious) can send message to this window. If you don't expect this, consider checking the origin of sender.",
+            "markdown": "The origin of the received message is not checked. This means any site (even malicious) can send message to this window. If you don't expect this, consider checking the origin of sender.",
+            "arguments": []
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "node_modules/axios/lib/utils.js",
+                  "uriBaseId": "%SRCROOT%"
+                },
+                "region": {
+                  "startLine": 681,
+                  "endLine": 681,
+                  "startColumn": 42,
+                  "endColumn": 56
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "0": "0555e97a59ec07e708c95b9fe8db425ccf74a10e84dd358b5f3535f3171f4922",
+            "1": "988d3c10.4773f344.607187b5.c559ebce.8d22f254.10d85176.83265159.870b3dbe.988d3c10.4773f344.6bb8eed2.c559ebce.69920cab.8020cfdf.83265159.1db0a836"
+          },
+          "codeFlows": [
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "id": 0,
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "node_modules/axios/lib/utils.js",
+                            "uriBaseId": "%SRCROOT%"
+                          },
+                          "region": {
+                            "startLine": 681,
+                            "endLine": 681,
+                            "startColumn": 42,
+                            "endColumn": 56
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "priorityScore": 396,
+            "priorityScoreFactors": [
+              {
+                "label": true,
+                "type": "multipleOccurrence"
+              },
+              {
+                "label": true,
+                "type": "hotFileCodeFlow"
+              },
+              {
+                "label": true,
+                "type": "fixExamples"
+              }
+            ],
+            "isAutofixable": true
+          }
+        },
+        {
+          "ruleId": "javascript/reDOS",
+          "ruleIndex": 3,
+          "level": "error",
+          "message": {
+            "text": "Unsanitized user input from the request URL flows into match, where it is used to build a regular expression. This may result in a Regular expression Denial of Service attack (reDOS).",
+            "markdown": "Unsanitized user input from {0} {1} into {2}, where it is used to build a regular expression. This may result in a Regular expression Denial of Service attack (reDOS).",
+            "arguments": [
+              "[the request URL](0)",
+              "[flows](1),(2),(3),(4),(5),(6),(7),(8),(9)",
+              "[match](10)"
+            ]
+          },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": {
+                  "uri": "node_modules/express/lib/router/index.js",
+                  "uriBaseId": "%SRCROOT%"
+                },
+                "region": {
+                  "startLine": 585,
+                  "endLine": 585,
+                  "startColumn": 18,
+                  "endColumn": 23
+                }
+              }
+            }
+          ],
+          "fingerprints": {
+            "0": "0666da924f49bfc815c46ab868b06c452de7b21ca5f4b63e72d26987c8cb853d",
+            "1": "d7b3d065.4773f344.126beb45.ed202363.ef9f7d82.37110c89.83265159.d5de5421.84a53940.277c621c.89af0168.1a7f4325.3f452f8c.8431f2ca.c08dd55c.53752168"
+          },
+          "codeFlows": [
+            {
+              "threadFlows": [
+                {
+                  "locations": [
+                    {
+                      "location": {
+                        "id": 0,
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "node_modules/express/lib/router/index.js",
+                            "uriBaseId": "%SRCROOT%"
+                          },
+                          "region": {
+                            "startLine": 173,
+                            "endLine": 173,
+                            "startColumn": 7,
+                            "endColumn": 18
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "id": 1,
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "node_modules/express/lib/router/index.js",
+                            "uriBaseId": "%SRCROOT%"
+                          },
+                          "region": {
+                            "startLine": 173,
+                            "endLine": 173,
+                            "startColumn": 7,
+                            "endColumn": 18
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "id": 2,
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "node_modules/express/lib/router/index.js",
+                            "uriBaseId": "%SRCROOT%"
+                          },
+                          "region": {
+                            "startLine": 173,
+                            "endLine": 173,
+                            "startColumn": 3,
+                            "endColumn": 6
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "id": 3,
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "node_modules/express/lib/router/index.js",
+                            "uriBaseId": "%SRCROOT%"
+                          },
+                          "region": {
+                            "startLine": 213,
+                            "endLine": 213,
+                            "startColumn": 28,
+                            "endColumn": 31
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "id": 4,
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "node_modules/express/lib/router/index.js",
+                            "uriBaseId": "%SRCROOT%"
+                          },
+                          "region": {
+                            "startLine": 537,
+                            "endLine": 537,
+                            "startColumn": 22,
+                            "endColumn": 25
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "id": 5,
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "node_modules/express/lib/router/index.js",
+                            "uriBaseId": "%SRCROOT%"
+                          },
+                          "region": {
+                            "startLine": 539,
+                            "endLine": 539,
+                            "startColumn": 21,
+                            "endColumn": 24
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "id": 6,
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "node_modules/express/lib/router/index.js",
+                            "uriBaseId": "%SRCROOT%"
+                          },
+                          "region": {
+                            "startLine": 539,
+                            "endLine": 539,
+                            "startColumn": 12,
+                            "endColumn": 20
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "id": 7,
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "node_modules/express/lib/router/index.js",
+                            "uriBaseId": "%SRCROOT%"
+                          },
+                          "region": {
+                            "startLine": 213,
+                            "endLine": 213,
+                            "startColumn": 9,
+                            "endColumn": 13
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "id": 8,
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "node_modules/express/lib/router/index.js",
+                            "uriBaseId": "%SRCROOT%"
+                          },
+                          "region": {
+                            "startLine": 215,
+                            "endLine": 215,
+                            "startColumn": 9,
+                            "endColumn": 13
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "id": 9,
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "node_modules/express/lib/router/index.js",
+                            "uriBaseId": "%SRCROOT%"
+                          },
+                          "region": {
+                            "startLine": 585,
+                            "endLine": 585,
+                            "startColumn": 24,
+                            "endColumn": 28
+                          }
+                        }
+                      }
+                    },
+                    {
+                      "location": {
+                        "id": 10,
+                        "physicalLocation": {
+                          "artifactLocation": {
+                            "uri": "node_modules/express/lib/router/index.js",
+                            "uriBaseId": "%SRCROOT%"
+                          },
+                          "region": {
+                            "startLine": 585,
+                            "endLine": 585,
+                            "startColumn": 18,
+                            "endColumn": 23
+                          }
+                        }
+                      }
+                    }
+                  ]
+                }
+              ]
+            }
+          ],
+          "properties": {
+            "priorityScore": 760,
+            "priorityScoreFactors": [
+              {
+                "label": true,
+                "type": "hotFileCodeFlow"
+              },
+              {
+                "label": true,
+                "type": "fixExamples"
+              }
+            ],
+            "isAutofixable": true
+          }
+        }
+      ],
+      "properties": {
+        "coverage": [
+          {
+            "isSupported": true,
+            "lang": "JavaScript",
+            "files": 1357,
+            "type": "SUPPORTED"
+          },
+          {
+            "isSupported": true,
+            "lang": "TypeScript",
+            "files": 59,
+            "type": "SUPPORTED"
+          }
+        ]
+      }
+    }
+  ]
+}
