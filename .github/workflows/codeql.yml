@@ -39,7 +39,7 @@ jobs:
 
       # --- IaC com Snyk ---
       - name: Rodando Snyk para Terraform (IaC)
-        uses: snyk/actions/terraform-scan@v1
+        uses: snyk/actions/terraform-scan@master
         with:
           command: test
         env:
