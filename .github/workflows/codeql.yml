@@ -13,7 +13,6 @@ jobs:
     permissions:
       actions: read
       contents: read
-      metadata: read
       packages: read
       security-events: write
 
