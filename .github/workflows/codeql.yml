@@ -20,10 +20,24 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Initialize CodeQL
+      - name: Rodando CodeQL
         uses: github/codeql-action/init@v3
         with:
           languages: javascript
 
-      - name: Run CodeQL Analysis
+      - name: Rodando CodeQL Analysis
         uses: github/codeql-action/analyze@v3
+
+      - name: Rodando SCA (Snyk)
+        uses: snyk/actions/test@master
+        with:
+          command: test
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+
+      - name: Rodando IaC (Terraform)
+        uses: snyk/actions/terraform@master
+        with:
+          command: test
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
