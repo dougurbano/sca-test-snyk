@@ -1,22 +1,22 @@
-#name: Snyk SCA
-##
-#on:
-  #push:
-   # branches: [ main ]
- # pull_request:
-    #branches: [ main ]
+name: Snyk SCA Scan
 
-#jobs:
-  #snyk-sca:
-   # runs-on: ubuntu-latest
-   # steps:
-    #  - name: Checkout repository
-    #    uses: actions/checkout@v2
-#
-   #   - name: Rodando Snyk para dependências
-   #     uses: snyk/actions/node@master
-   #     with:
-    #      command: test
-      #    args: --all-projects
-    #    env:
-      #    SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  snyk-sca:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Run Snyk SCA Scan
+        uses: snyk/actions/node@master
+        with:
+          command: test
+          args: --all-projects
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
