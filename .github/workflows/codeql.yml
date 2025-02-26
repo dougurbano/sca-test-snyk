@@ -31,11 +31,11 @@ jobs:
         uses: github/codeql-action/analyze@v3
 
       - name: Rodando SCA (Snyk)
-        uses: snyk/actions/test@v1.0.1
+        uses: snyk/actions/test@v1
         with:
           command: test
 
       - name: Rodando IaC (Terraform)
-        uses: snyk/actions/terraform@v1.0.1
-        with:
+        uses: snyk/actions/terraform@v1
+        with
           command: test
