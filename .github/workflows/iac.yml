@@ -2,20 +2,23 @@ name: Snyk IaC Scan
 
 on:
   push:
-    branches: [ main ]
+    branches:
+      - main
   pull_request:
-    branches: [ main ]
+    branches:
+      - main
 
 jobs:
-  snyk-iac:
+  snyk:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Run Snyk Terraform Scan
-        uses: snyk/actions/terraform@terraform/v2.0.1
+      - name: Run Snyk to check for IaC issues
+        uses: snyk/actions@v2 # Update to the correct version
         with:
-          args: --file=./infra/main.tf
+          command: iac test
+          args: terraform
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
