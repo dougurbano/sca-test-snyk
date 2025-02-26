@@ -28,7 +28,7 @@ jobs:
       - name: Analisando com CodeQL (SAST)
         uses: github/codeql-action/analyze@v3
 
-      # --- SCA com Snyk ---
+      # --- SCA com Snyk (Node.js) ---
       - name: Rodando Snyk para dependências (SCA)
         uses: snyk/actions/node@master
         with:
@@ -37,10 +37,10 @@ jobs:
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
-      # --- IaC com Snyk ---
+      # --- IaC com Snyk (Terraform) ---
       - name: Rodando Snyk para Terraform (IaC)
-        uses: snyk/actions/terraform-scan@master
+        uses: snyk/actions/terraform@master
         with:
-          command: test
+          args: --file=./infra/main.tf
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
