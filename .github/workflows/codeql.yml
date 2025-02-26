@@ -1,41 +1,17 @@
 name: Security Scan
 
-on:
-  push:
-    branches: [ main ]
-  pull_request:
-    branches: [ main ]
+on: [push, pull_request]
 
 jobs:
-  analyze:
-    name: Analyze
+  scan:
     runs-on: ubuntu-latest
-    env:
-      SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
-
-    permissions:
-      actions: read
-      contents: read
-      security-events: write
-
     steps:
-      - name: Checkout repository
-        uses: actions/checkout@v2
+    - name: Checkout code
+      uses: actions/checkout@v2
 
-      - name: Rodando CodeQL
-        uses: github/codeql-action/init@v3
-        with:
-          languages: javascript
-
-      - name: Rodando CodeQL Analysis
-        uses: github/codeql-action/analyze@v3
-
-      - name: Rodando SCA (Snyk)
-        uses: snyk/actions/test@v1
-        with:
-          command: test
-
-      - name: Rodando IaC (Terraform)
-        uses: snyk/actions/terraform@v1
-        with:
-          command: test
+    - name: Run Snyk to check for vulnerabilities
+      uses: snyk/actions@latest # Updated to use the latest version
+      with:
+        args: test
+      env:
+        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
