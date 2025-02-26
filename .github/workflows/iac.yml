@@ -1,0 +1,21 @@
+name: Snyk IaC
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  snyk-terraform:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Snyk Terraform Scan
+        uses: snyk/actions/terraform@v2
+        with:
+          args: --file=./infra/main.tf
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
