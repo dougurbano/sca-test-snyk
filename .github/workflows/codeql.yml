@@ -1,17 +1,13 @@
-name: Security Scan
-
-on: [push, pull_request]
-
+name: Example workflow using Snyk
+on: push
 jobs:
-  scan:
+  security:
     runs-on: ubuntu-latest
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
-
-    - name: Run Snyk to check for vulnerabilities
-      uses: snyk/actions@latest # Updated to use the latest version
-      with:
-        args: test
-      env:
-        SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+      - uses: actions/checkout@master
+      - name: Run Snyk to check for vulnerabilities
+        uses: snyk/actions/node@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          command: monitor
