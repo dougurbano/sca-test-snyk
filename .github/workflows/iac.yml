@@ -1,6 +1,6 @@
-- name: Snyk Terraform Scan
-  uses: snyk/actions/terraform@master
-  with:
-    args: --file=./infra/main.tf
-  env:
-    SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+#- name: Snyk Terraform Scan
+ # uses: snyk/actions/terraform@master
+  #with:
+   # args: --file=./infra/main.tf
+  #env:
+   # SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}

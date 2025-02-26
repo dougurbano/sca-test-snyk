@@ -1,4 +1,4 @@
-name: CodeQL
+name: Security Scan
 
 on:
   push:
@@ -7,7 +7,8 @@ on:
     branches: [ main ]
 
 jobs:
-  codeql-analysis:
+  scan:
+    name: Security Scan (SAST, SCA e IaC)
     runs-on: ubuntu-latest
     permissions:
       actions: read
@@ -19,12 +20,27 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v2
 
-      - name: Configurando CodeQL
+      # --- SAST com CodeQL ---
+      - name: Rodando CodeQL (SAST)
         uses: github/codeql-action/init@v3
         with:
           languages: 'javascript'
-          # Adapte a linguagem conforme seu projeto
-          # Ex.: 'javascript,python'
-
-      - name: Rodando CodeQL Analysis
+      - name: Analisando com CodeQL (SAST)
         uses: github/codeql-action/analyze@v3
+
+      # --- SCA com Snyk ---
+      - name: Rodando Snyk para dependências (SCA)
+        uses: snyk/actions/node@master
+        with:
+          command: test
+          args: --all-projects
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+
+      # --- IaC com Snyk ---
+      - name: Rodando Snyk para Terraform (IaC)
+        uses: snyk/actions/terraform-scan@master
+        with:
+          command: test
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
