@@ -29,14 +29,14 @@ jobs:
         uses: github/codeql-action/analyze@v3
 
       - name: Rodando SCA (Snyk)
-        uses: snyk/actions/test@master
+        uses: snyk/actions/test@v1
         with:
           command: test
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
       - name: Rodando IaC (Terraform)
-        uses: snyk/actions/terraform@master
+        uses: snyk/actions/terraform@v1
         with:
           command: test
         env:
