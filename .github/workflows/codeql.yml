@@ -1,13 +1,47 @@
-name: Example workflow using Snyk
-on: push
+name: Security Scan
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
 jobs:
   security:
+    name: Security Scan
     runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      contents: read
+      metadata: read
+      packages: read
+      security-events: write
+
     steps:
-      - uses: actions/checkout@master
-      - name: Run Snyk to check for vulnerabilities
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      # Etapa de SAST com CodeQL
+      - name: Rodando CodeQL
+        uses: github/codeql-action/init@v3
+        with:
+          languages: javascript
+
+      - name: Rodando CodeQL Analysis
+        uses: github/codeql-action/analyze@v3
+
+      # Etapa de SCA para análise de vulnerabilidades nas dependências (Node)
+      - name: Rodando SCA (Vulnerabilidades de Dependências)
         uses: snyk/actions/node@master
         env:
           SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
         with:
-          command: monitor
+          command: test
+
+      # Etapa de IaC para análise de infraestrutura como código (Terraform)
+      - name: Rodando IaC (Terraform)
+        uses: snyk/actions/terraform@master
+        env:
+          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          command: test
