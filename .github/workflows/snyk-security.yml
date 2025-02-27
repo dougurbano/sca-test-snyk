@@ -7,14 +7,16 @@ on:
     branches: ["main"]
 
 permissions:
-  contents: read
+  contents: read         # Para que o actions/checkout possa buscar o código
+  security-events: write   # Para envio dos resultados de Code Scanning
+  actions: read            # Necessário para repositórios privados no upload do SARIF
+
+env:
+  # Certifique-se de que o segredo SNYK_TOKEN está configurado corretamente no repositório
+  SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
 
 jobs:
   snyk:
-    permissions:
-      contents: read        # Permissão para actions/checkout ler o código
-      security-events: write  # Para enviar os resultados de Code Scanning
-      actions: read           # Necessário para repositórios privados ao fazer upload dos resultados
     runs-on: ubuntu-latest
     steps:
       - name: Checkout Repository
@@ -22,30 +24,30 @@ jobs:
 
       - name: Set up Snyk CLI to check for security issues
         uses: snyk/actions/setup@806182742461562b67788a64410098c9d9b96adb
-        env:
-          SNYK_TOKEN: ${{ secrets.SNYK_TOKEN }}
+        with:
+          snyk-version: latest
 
-      - name: Snyk Code test
-        # Adiciona --debug para obter mais detalhes e usa "|| true" para evitar falhas que interrompam o pipeline.
-        run: snyk code test --sarif --debug > snyk-code.sarif || true
+      - id: code_test
+        name: Snyk Code test
+        # A flag --debug ajuda a detalhar o erro; o "|| true" impede que o erro interrompa o pipeline.
+        run: |
+          snyk code test --sarif --debug > snyk-code.sarif || true
 
       - name: Snyk Open Source monitor
-        # Caso o repositório não possua dependências ou para evitar falhas, utiliza "|| true".
         run: snyk monitor --all-projects || true
 
       - name: Snyk IaC test and report
-        # Se a análise de IaC falhar, o pipeline continua.
         run: snyk iac test --report || true
 
-      - name: Build a Docker image
-        # Se o repositório não utilizar Docker, essa etapa pode ser desabilitada ou ajustada.
+      # Etapas opcionais: se o seu repositório não utilizar Docker, você pode comentar ou remover estas etapas.
+      - name: Build a Docker image (opcional)
         run: docker build -t your/image-to-test . || true
 
-      - name: Snyk Container monitor
-        # Ajuste "your/image-to-test" e "Dockerfile" conforme sua configuração.
+      - name: Snyk Container monitor (opcional)
         run: snyk container monitor your/image-to-test --file=Dockerfile || true
 
       - name: Upload result to GitHub Code Scanning
+        if: ${{ always() }}
         uses: github/codeql-action/upload-sarif@v3
         with:
           sarif_file: snyk-code.sarif
