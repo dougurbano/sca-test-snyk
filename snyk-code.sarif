@@ -258,9 +258,9 @@
                         "line": "}\n",
                         "lineNumber": 14,
                         "lineChange": "removed"
-                      },
+                      }
                       {
-                        "line": "  const ws = new WebSocket(`ws://${window.location.host}`);\n",
+                        "line": "  const ws = new WebSocket(`wss://${window.location.host}`);
                         "lineNumber": 6,
                         "lineChange": "added"
                       },
