@@ -21,21 +21,15 @@ resource "aws_security_group" "allow_all" {
   }
 }
 
-resource "aws_instance" "web" {
-  ami           = "ami-0c55b159cbfafe1f0"  # Vulnerabilidade: usar AMI sem validação de segurança
-  instance_type = "t2.micro"
-
-  key_name = "my-key"  # Vulnerabilidade: não usar chave segura
-
-  tags = {
-    Name = "VulnerableInstance"
-  }
-
-  # Falta de configuração de rede segura
-  associate_public_ip_address = true  # Vulnerabilidade: instância com IP público, sem necessidade
+resource "aws_s3_bucket_public_access_block" "block_public_access" {
+  bucket                  = aws_s3_bucket.bucket.id
+  block_public_acls       = true
+  block_public_policy     = true
+  ignore_public_acls      = true
+  restrict_public_buckets = true
 }
 
 resource "aws_s3_bucket" "insecure_bucket" {
   bucket = "my-insecure-bucket-terraform"
-  acl    = "public-read"  # Vulnerabilidade: bucket S3 público
+  acl    = "private"  # Vulnerabilidade: bucket S3 público
 }
