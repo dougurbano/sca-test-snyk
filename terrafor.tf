@@ -10,7 +10,7 @@ resource "aws_security_group" "allow_all" {
     from_port   = 0
     to_port     = 65535
     protocol    = "tcp"
-    cidr_blocks = ["0.0.0.0/0"]  # Vulnerabilidade: Permitir acesso irrestrito a todas as portas
+    cidr_blocks = ["192.168.1.233"]  # Vulnerabilidade: Permitir acesso irrestrito a todas as portas
   }
 
   egress {
